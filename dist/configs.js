@@ -14,7 +14,7 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function () {
-  var enterModule = require('react-hot-loader/patch').enterModule;
+  var enterModule = require('react-hot-loader').enterModule;
 
   enterModule && enterModule(module);
 })();
@@ -252,7 +252,7 @@ var convertAtomicBlock = function convertAtomicBlock(block, contentState) {
       height = _entity$getData.height,
       meta = _entity$getData.meta;
 
-  if (mediaType === 'image') {
+  if (mediaType === 'sidebarimage') {
 
     var imageWrapStyle = {};
     var styledClassName = '';
@@ -278,8 +278,8 @@ var convertAtomicBlock = function convertAtomicBlock(block, contentState) {
     } else {
       return _react2.default.createElement(
         "div",
-        { className: "media-wrap image-wrap" + styledClassName, style: imageWrapStyle },
-        _react2.default.createElement("img", _extends({}, meta, { src: url, width: width, height: height, style: { width: width, height: height } }))
+        { className: "braft-editor-custom-block" },
+        _react2.default.createElement("img", { src: url, width: width, style: { width: '220px', height: 'auto' } })
       );
     }
   } else if (mediaType === 'audio') {
@@ -302,6 +302,23 @@ var convertAtomicBlock = function convertAtomicBlock(block, contentState) {
     );
   } else if (mediaType === 'hr') {
     return _react2.default.createElement("hr", null);
+  } else if (mediaType === 'sidebarsearchitem') {
+    var mediaData = entity.getData();
+    return "\n      <div class=\"braft-editor-custom-block\">\n        <div class=\"braft-editor-search-item-wrap\">\n          <div class=\"braft-editor-search-item-cover\">\n            <div class=\"ice-img sharp\">\n              <img src=" + mediaData.coverUrl + " />\n            </div>\n          </div>\n          <a href=" + mediaData.resourceUrl + " target=\"_blank\" class=\"braft-editor-search-item-title\">" + mediaData.title + "</a>\n          <span class=\"braft-editor-search-item-price\" >" + mediaData.price + "</span>\n        </div>\n      </div>\n    ";
+  } else if (mediaType === 'sidebarhotspaceimage') {
+    var _mediaData = entity.getData();
+    var _height = _mediaData.picHeight * 200 / _mediaData.picWidth;
+    var _width = 200;
+    var hotSpaces = _mediaData.hotSpaces;
+
+    hotSpaces = hotSpaces.map(function (hotspot, index) {
+      var x = _width * hotspot.x / 100;
+      var y = _height * hotspot.y / 100;
+      var spotWidth = _width * hotspot.width / 100;
+      var spotHeight = _height * hotspot.height / 100;
+      return "\n        <a key=" + index + " href=\"" + hotspot.data.url + "\" target=\"_blank\" class=\"braft-editor-hotspot-area-wrap\" style=\"top: " + y + ", left: " + x + ", width: " + spotWidth + ", height: " + spotHeight + "\"></a>\n      ";
+    });
+    return "\n      <div class=\"braft-editor-custom-block\">\n        <div class=\"braft-editor-hotspot-image-wrap\" style=\"width: 200, height: " + _height + "\">\n          <div class=\"braft-editor-hotspot-image-cover\" style=\"width: 200, height: " + _height + "\">\n            <div class=\"ice-img sharp\" style=\"width: 200, height: " + _height + "\">\n              <img src=" + _mediaData.url + " style=\"width: 200, height: " + _height + "\" />\n            </div>\n          </div>\n          <div class=\"braft-editor-hotspot-list\" style=\"width: 200, height: " + _height + "\">\n            <div className=\"braft-ediotr-hotspot-area\" style=\"width: 200, height: " + _height + "\">\n              " + hotSpaces + "\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
   } else {
     return _react2.default.createElement("p", null);
   }
@@ -525,7 +542,7 @@ var htmlToEntity = function htmlToEntity(nodeName, node, createEntity) {
       entityData.link_target = parentNode.target;
     }
 
-    return createEntity('IMAGE', 'IMMUTABLE', entityData);
+    return createEntity('SIDEBARIMAGE', 'IMMUTABLE', entityData);
   } else if (nodeName === 'hr') {
     return createEntity('HR', 'IMMUTABLE', {});
   } else if (node.parentNode && node.parentNode.classList.contains('embed-wrap')) {
@@ -610,9 +627,9 @@ var convertCodeBlock = exports.convertCodeBlock = function convertCodeBlock(html
 ;
 
 (function () {
-  var reactHotLoader = require('react-hot-loader/patch').default;
+  var reactHotLoader = require('react-hot-loader').default;
 
-  var leaveModule = require('react-hot-loader/patch').leaveModule;
+  var leaveModule = require('react-hot-loader').leaveModule;
 
   if (!reactHotLoader) {
     return;

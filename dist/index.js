@@ -12,7 +12,7 @@ var _configs = require('./configs');
 var _draftJs = require('draft-js');
 
 (function () {
-  var enterModule = require('react-hot-loader/patch').enterModule;
+  var enterModule = require('react-hot-loader').enterModule;
 
   enterModule && enterModule(module);
 })();
@@ -41,9 +41,9 @@ var convertHTMLToRaw = exports.convertHTMLToRaw = function convertHTMLToRaw(cont
 ;
 
 (function () {
-  var reactHotLoader = require('react-hot-loader/patch').default;
+  var reactHotLoader = require('react-hot-loader').default;
 
-  var leaveModule = require('react-hot-loader/patch').leaveModule;
+  var leaveModule = require('react-hot-loader').leaveModule;
 
   if (!reactHotLoader) {
     return;

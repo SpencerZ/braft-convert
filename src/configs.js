@@ -223,7 +223,7 @@ const convertAtomicBlock = (block, contentState) => {
   let { float, alignment } = block.data
   let { url, link, link_target, width, height, meta } = entity.getData()
 
-  if (mediaType === 'image') {
+  if (mediaType === 'sidebarimage') {
 
     let imageWrapStyle = {}
     let styledClassName = ''
@@ -246,8 +246,8 @@ const convertAtomicBlock = (block, contentState) => {
       )
     } else {
       return (
-        <div className={"media-wrap image-wrap" + styledClassName} style={imageWrapStyle}>
-          <img {...meta} src={url} width={width} height={height} style={{width, height}}/>
+        <div className="braft-editor-custom-block">
+          <img src={url} width={width} style={{width: '220px', height: 'auto'}}/>
         </div>
       )
     }
@@ -260,7 +260,52 @@ const convertAtomicBlock = (block, contentState) => {
     return <div className="media-wrap embed-wrap"><div dangerouslySetInnerHTML={{__html: url}}/></div>
   } else if (mediaType === 'hr') {
     return <hr></hr>
-  } else {
+  } else if (mediaType === 'sidebarsearchitem') {
+    const mediaData = entity.getData();
+    return `
+      <div class="braft-editor-custom-block">
+        <div class="braft-editor-search-item-wrap">
+          <div class="braft-editor-search-item-cover">
+            <div class="ice-img sharp">
+              <img src=${mediaData.coverUrl} />
+            </div>
+          </div>
+          <a href=${mediaData.resourceUrl} target="_blank" class="braft-editor-search-item-title">${mediaData.title}</a>
+          <span class="braft-editor-search-item-price" >${mediaData.price}</span>
+        </div>
+      </div>
+    `
+  } else if(mediaType === 'sidebarhotspaceimage') {
+    const mediaData = entity.getData();
+    let height = mediaData.picHeight*200 / mediaData.picWidth;
+    let width = 200;
+    let { hotSpaces } = mediaData;
+    hotSpaces = hotSpaces.map((hotspot, index) => {
+      const x = width * hotspot.x/100;
+      const y = height * hotspot.y/100;
+      const spotWidth = width * hotspot.width/100;
+      const spotHeight = height * hotspot.height/100;
+      return `
+        <a key=${index} href="${hotspot.data.url}" target="_blank" class="braft-editor-hotspot-area-wrap" style="top: ${y}, left: ${x}, width: ${spotWidth}, height: ${spotHeight}"></a>
+      `;
+    });
+    return `
+      <div class="braft-editor-custom-block">
+        <div class="braft-editor-hotspot-image-wrap" style="width: 200, height: ${height}">
+          <div class="braft-editor-hotspot-image-cover" style="width: 200, height: ${height}">
+            <div class="ice-img sharp" style="width: 200, height: ${height}">
+              <img src=${mediaData.url} style="width: 200, height: ${height}" />
+            </div>
+          </div>
+          <div class="braft-editor-hotspot-list" style="width: 200, height: ${height}">
+            <div className="braft-ediotr-hotspot-area" style="width: 200, height: ${height}">
+              ${hotSpaces}
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  }else {
     return <p></p>
   }
 
@@ -455,7 +500,7 @@ const htmlToEntity = (nodeName, node, createEntity) => {
       entityData.link_target = parentNode.target
     }
 
-    return createEntity('IMAGE', 'IMMUTABLE', entityData) 
+    return createEntity('SIDEBARIMAGE', 'IMMUTABLE', entityData) 
 
   } else if (nodeName === 'hr') {
     return createEntity('HR', 'IMMUTABLE', {}) 
