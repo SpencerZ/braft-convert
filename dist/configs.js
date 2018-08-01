@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -7,9 +7,13 @@ exports.convertCodeBlock = exports.mergeStyledSpans = exports.getFromHTMLConfig 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _ImgWithPreview = require('./ImgWithPreview');
+
+var _ImgWithPreview2 = _interopRequireDefault(_ImgWithPreview);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -222,19 +226,19 @@ var blockNames = blockTypes.map(function (key) {
 var convertAtomicBlock = function convertAtomicBlock(block, contentState) {
 
   if (!block || !block.key) {
-    return _react2.default.createElement("p", null);
+    return _react2.default.createElement('p', null);
   }
 
   var contentBlock = contentState.getBlockForKey(block.key);
 
   if (!contentBlock) {
-    return _react2.default.createElement("p", null);
+    return _react2.default.createElement('p', null);
   }
 
   var entityKey = contentBlock.getEntityAt(0);
 
   if (!entityKey) {
-    return _react2.default.createElement("p", null);
+    return _react2.default.createElement('p', null);
   }
 
   var entity = contentState.getEntity(entityKey);
@@ -267,44 +271,44 @@ var convertAtomicBlock = function convertAtomicBlock(block, contentState) {
 
     if (link) {
       return _react2.default.createElement(
-        "div",
+        'div',
         { className: "media-wrap image-wrap" + styledClassName, style: imageWrapStyle },
         _react2.default.createElement(
-          "a",
+          'a',
           { style: { display: 'inline-block' }, href: link, target: link_target },
-          _react2.default.createElement("img", _extends({}, meta, { src: url, width: width, height: height, style: { width: width, height: height } }))
+          _react2.default.createElement('img', _extends({}, meta, { src: url, width: width, height: height, style: { width: width, height: height } }))
         )
       );
     } else {
       return _react2.default.createElement(
-        "div",
-        { className: "braft-editor-custom-block" },
-        _react2.default.createElement("img", { src: url, width: width, style: { width: '220px', height: 'auto' } })
+        'div',
+        { className: 'braft-editor-custom-block' },
+        _react2.default.createElement(_ImgWithPreview2.default, { src: url, width: width, style: { width: '60%', height: 'auto', border: '1px solid #ccc' } })
       );
     }
   } else if (mediaType === 'audio') {
     return _react2.default.createElement(
-      "div",
-      { className: "media-wrap audio-wrap" },
-      _react2.default.createElement("audio", _extends({ controls: true }, meta, { src: url }))
+      'div',
+      { className: 'media-wrap audio-wrap' },
+      _react2.default.createElement('audio', _extends({ controls: true }, meta, { src: url }))
     );
   } else if (mediaType === 'video') {
     return _react2.default.createElement(
-      "div",
-      { className: "media-wrap video-wrap" },
-      _react2.default.createElement("video", _extends({ controls: true }, meta, { src: url, width: width, height: height }))
+      'div',
+      { className: 'media-wrap video-wrap' },
+      _react2.default.createElement('video', _extends({ controls: true }, meta, { src: url, width: width, height: height }))
     );
   } else if (mediaType === 'embed') {
     return _react2.default.createElement(
-      "div",
-      { className: "media-wrap embed-wrap" },
-      _react2.default.createElement("div", { dangerouslySetInnerHTML: { __html: url } })
+      'div',
+      { className: 'media-wrap embed-wrap' },
+      _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: url } })
     );
   } else if (mediaType === 'hr') {
-    return _react2.default.createElement("hr", null);
+    return _react2.default.createElement('hr', null);
   } else if (mediaType === 'sidebarsearchitem') {
     var mediaData = entity.getData();
-    return "\n      <div class=\"braft-editor-custom-block\">\n        <div class=\"braft-editor-search-item-wrap\">\n          <div class=\"braft-editor-search-item-cover\">\n            <div class=\"ice-img sharp\">\n              <img src=" + mediaData.coverUrl + " />\n            </div>\n          </div>\n          <a href=" + mediaData.resourceUrl + " target=\"_blank\" class=\"braft-editor-search-item-title\">" + mediaData.title + "</a>\n          <span class=\"braft-editor-search-item-price\" >" + mediaData.price + "</span>\n        </div>\n      </div>\n    ";
+    return '\n      <div class="braft-editor-custom-block">\n        <div class="braft-editor-search-item-wrap">\n          <div class="braft-editor-search-item-cover">\n            <div class="ice-img sharp">\n              <a href=' + mediaData.resourceUrl + ' target="_blank"><img src=' + mediaData.coverUrl + ' /></a>\n            </div>\n          </div>\n          <a href=' + mediaData.resourceUrl + ' target="_blank" class="braft-editor-search-item-title">' + mediaData.title + '</a>\n          <span class="braft-editor-search-item-price" >' + mediaData.price + '</span>\n        </div>\n      </div>\n    ';
   } else if (mediaType === 'sidebarhotspaceimage') {
     var _mediaData = entity.getData();
     var _height = _mediaData.picHeight * 200 / _mediaData.picWidth;
@@ -316,11 +320,11 @@ var convertAtomicBlock = function convertAtomicBlock(block, contentState) {
       var y = _height * hotspot.y / 100;
       var spotWidth = _width * hotspot.width / 100;
       var spotHeight = _height * hotspot.height / 100;
-      return "\n        <a key=" + index + " href=\"" + hotspot.data.url + "\" target=\"_blank\" class=\"braft-editor-hotspot-area-wrap\" style=\"top: " + y + ", left: " + x + ", width: " + spotWidth + ", height: " + spotHeight + "\"></a>\n      ";
+      return '\n        <a key=' + index + ' href="' + hotspot.data.url + '" target="_blank" class="braft-editor-hotspot-area-wrap" style="top: ' + y + 'px; left: ' + x + 'px; width: ' + spotWidth + 'px; height: ' + spotHeight + 'px;"></a>\n      ';
     });
-    return "\n      <div class=\"braft-editor-custom-block\">\n        <div class=\"braft-editor-hotspot-image-wrap\" style=\"width: 200, height: " + _height + "\">\n          <div class=\"braft-editor-hotspot-image-cover\" style=\"width: 200, height: " + _height + "\">\n            <div class=\"ice-img sharp\" style=\"width: 200, height: " + _height + "\">\n              <img src=" + _mediaData.url + " style=\"width: 200, height: " + _height + "\" />\n            </div>\n          </div>\n          <div class=\"braft-editor-hotspot-list\" style=\"width: 200, height: " + _height + "\">\n            <div className=\"braft-ediotr-hotspot-area\" style=\"width: 200, height: " + _height + "\">\n              " + hotSpaces + "\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
+    return '\n      <div class="braft-editor-custom-block">\n        <div class="braft-editor-hotspot-image-wrap" style="width: 200px; height: ' + _height + 'px">\n          <div class="braft-editor-hotspot-image-cover" style="width: 200px; height: ' + _height + 'px">\n            <div class="ice-img sharp" style="width: 200px; height: ' + _height + 'px">\n              <img src=' + _mediaData.url + ' style="width: 200px; height: ' + _height + 'px" />\n            </div>\n          </div>\n          <div class="braft-editor-hotspot-list" style="width: 200px; height: ' + _height + 'px">\n            <div className="braft-ediotr-hotspot-area" style="width: 200px; height: ' + _height + 'px">\n              ' + hotSpaces + '\n            </div>\n          </div>\n        </div>\n      </div>\n    ';
   } else {
-    return _react2.default.createElement("p", null);
+    return _react2.default.createElement('p', null);
   }
 };
 
@@ -330,29 +334,29 @@ var styleToHTML = function styleToHTML(props) {
     style = style.toLowerCase();
 
     if (style === 'strikethrough') {
-      return _react2.default.createElement("span", { style: { textDecoration: 'line-through' } });
+      return _react2.default.createElement('span', { style: { textDecoration: 'line-through' } });
     } else if (style === 'superscript') {
-      return _react2.default.createElement("sup", null);
+      return _react2.default.createElement('sup', null);
     } else if (style === 'subscript') {
-      return _react2.default.createElement("sub", null);
+      return _react2.default.createElement('sub', null);
     } else if (style.indexOf('color-') === 0) {
-      return _react2.default.createElement("span", { style: { color: '#' + style.split('-')[1] } });
+      return _react2.default.createElement('span', { style: { color: '#' + style.split('-')[1] } });
     } else if (style.indexOf('bgcolor-') === 0) {
-      return _react2.default.createElement("span", { style: { backgroundColor: '#' + style.split('-')[1] } });
+      return _react2.default.createElement('span', { style: { backgroundColor: '#' + style.split('-')[1] } });
     } else if (style.indexOf('fontsize-') === 0) {
-      return _react2.default.createElement("span", { style: { fontSize: style.split('-')[1] + 'px' } });
+      return _react2.default.createElement('span', { style: { fontSize: style.split('-')[1] + 'px' } });
     } else if (style.indexOf('lineheight-') === 0) {
-      return _react2.default.createElement("span", { style: { lineHeight: style.split('-')[1] } });
+      return _react2.default.createElement('span', { style: { lineHeight: style.split('-')[1] } });
     } else if (style.indexOf('letterspacing-') === 0) {
-      return _react2.default.createElement("span", { style: { letterSpacing: style.split('-')[1] + 'px' } });
+      return _react2.default.createElement('span', { style: { letterSpacing: style.split('-')[1] + 'px' } });
     } else if (style.indexOf('indent-') === 0) {
-      return _react2.default.createElement("span", { style: { paddingLeft: style.split('-')[1] + 'px', paddingRight: style.split('-')[1] + 'px' } });
+      return _react2.default.createElement('span', { style: { paddingLeft: style.split('-')[1] + 'px', paddingRight: style.split('-')[1] + 'px' } });
     } else if (style.indexOf('fontfamily-') === 0) {
       var fontFamily = props.fontFamilies.find(function (item) {
         return item.name.toLowerCase() === style.split('-')[1];
       });
       if (!fontFamily) return;
-      return _react2.default.createElement("span", { style: { fontFamily: fontFamily.family } });
+      return _react2.default.createElement('span', { style: { fontFamily: fontFamily.family } });
     }
   };
 };
@@ -368,7 +372,7 @@ var blockToHTML = function blockToHTML(contentState) {
 
 
     if (textAlign) {
-      blockStyle = " style=\"text-align:" + textAlign + ";\"";
+      blockStyle = ' style="text-align:' + textAlign + ';"';
     }
 
     if (blockType === 'atomic') {
@@ -383,40 +387,40 @@ var blockToHTML = function blockToHTML(contentState) {
 
       if (previousBlockType === 'code-block' && nextBlockType === 'code-block') {
         return {
-          start: "<code><div>" + codeBreakLine,
+          start: '<code><div>' + codeBreakLine,
           end: '</div></code>'
         };
       } else if (previousBlockType === 'code-block') {
         return {
-          start: "<code><div>" + codeBreakLine,
+          start: '<code><div>' + codeBreakLine,
           end: '</div></code></pre>'
         };
       } else if (nextBlockType === 'code-block') {
         return {
-          start: "<pre><code><div>" + codeBreakLine,
+          start: '<pre><code><div>' + codeBreakLine,
           end: '</div></code>'
         };
       } else {
         return {
-          start: "<pre><code><div>" + codeBreakLine,
+          start: '<pre><code><div>' + codeBreakLine,
           end: '</div></code></pre>'
         };
       }
     } else if (blocks[blockType]) {
       return {
-        start: "<" + blocks[blockType] + blockStyle + ">",
-        end: "</" + blocks[blockType] + ">"
+        start: '<' + blocks[blockType] + blockStyle + '>',
+        end: '</' + blocks[blockType] + '>'
       };
     } else if (blockType === 'unordered-list-item') {
       return {
-        start: "<li" + blockStyle + ">",
+        start: '<li' + blockStyle + '>',
         end: '</li>',
         nestStart: '<ul>',
         nestEnd: '</ul>'
       };
     } else if (blockType === 'ordered-list-item') {
       return {
-        start: "<li" + blockStyle + ">",
+        start: '<li' + blockStyle + '>',
         end: '</li>',
         nestStart: '<ol>',
         nestEnd: '</ol>'
@@ -432,19 +436,19 @@ var entityToHTML = function entityToHTML(entity, originalText) {
 
   if (entityType === 'link') {
     return _react2.default.createElement(
-      "a",
+      'a',
       { href: entity.data.href, target: entity.data.target },
       originalText
     );
   } else if (entityType === 'color') {
     return _react2.default.createElement(
-      "span",
+      'span',
       { style: { color: entity.data.color } },
       originalText
     );
   } else if (entityType === 'bg-color') {
     return _react2.default.createElement(
-      "span",
+      'span',
       { style: { backgroundColor: entity.data.color } },
       originalText
     );
@@ -620,7 +624,7 @@ var mergeStyledSpans = exports.mergeStyledSpans = function mergeStyledSpans(html
 
 var convertCodeBlock = exports.convertCodeBlock = function convertCodeBlock(htmlContent) {
 
-  var result = htmlContent.replace(/\<code\>\<div\>\<br\>\<\/div\>\<\/code\>/g, "<code><div></div></code>").replace(/\<pre\>\<code\>\<div\>/g, '<code><div>').replace(/\<\/div\>\<\/code\>\<\/pre\>/g, '</div></code>').replace(/\<code\>\<div\>/g, '<pre><code>').replace(/\<\/div\>\<\/code\>/g, '</code></pre>');
+  var result = htmlContent.replace(/\<code\>\<div\>\<br\>\<\/div\>\<\/code\>/g, '<code><div></div></code>').replace(/\<pre\>\<code\>\<div\>/g, '<code><div>').replace(/\<\/div\>\<\/code\>\<\/pre\>/g, '</div></code>').replace(/\<code\>\<div\>/g, '<pre><code>').replace(/\<\/div\>\<\/code\>/g, '</code></pre>');
 
   return result;
 };
@@ -635,23 +639,23 @@ var convertCodeBlock = exports.convertCodeBlock = function convertCodeBlock(html
     return;
   }
 
-  reactHotLoader.register(namedColors, "namedColors", "src/configs.js");
-  reactHotLoader.register(defaultFontFamilies, "defaultFontFamilies", "src/configs.js");
-  reactHotLoader.register(getHexColor, "getHexColor", "src/configs.js");
-  reactHotLoader.register(blocks, "blocks", "src/configs.js");
-  reactHotLoader.register(blockTypes, "blockTypes", "src/configs.js");
-  reactHotLoader.register(blockNames, "blockNames", "src/configs.js");
-  reactHotLoader.register(convertAtomicBlock, "convertAtomicBlock", "src/configs.js");
-  reactHotLoader.register(styleToHTML, "styleToHTML", "src/configs.js");
-  reactHotLoader.register(blockToHTML, "blockToHTML", "src/configs.js");
-  reactHotLoader.register(entityToHTML, "entityToHTML", "src/configs.js");
-  reactHotLoader.register(htmlToStyle, "htmlToStyle", "src/configs.js");
-  reactHotLoader.register(htmlToEntity, "htmlToEntity", "src/configs.js");
-  reactHotLoader.register(htmlToBlock, "htmlToBlock", "src/configs.js");
-  reactHotLoader.register(getToHTMLConfig, "getToHTMLConfig", "src/configs.js");
-  reactHotLoader.register(getFromHTMLConfig, "getFromHTMLConfig", "src/configs.js");
-  reactHotLoader.register(mergeStyledSpans, "mergeStyledSpans", "src/configs.js");
-  reactHotLoader.register(convertCodeBlock, "convertCodeBlock", "src/configs.js");
+  reactHotLoader.register(namedColors, 'namedColors', 'src/configs.js');
+  reactHotLoader.register(defaultFontFamilies, 'defaultFontFamilies', 'src/configs.js');
+  reactHotLoader.register(getHexColor, 'getHexColor', 'src/configs.js');
+  reactHotLoader.register(blocks, 'blocks', 'src/configs.js');
+  reactHotLoader.register(blockTypes, 'blockTypes', 'src/configs.js');
+  reactHotLoader.register(blockNames, 'blockNames', 'src/configs.js');
+  reactHotLoader.register(convertAtomicBlock, 'convertAtomicBlock', 'src/configs.js');
+  reactHotLoader.register(styleToHTML, 'styleToHTML', 'src/configs.js');
+  reactHotLoader.register(blockToHTML, 'blockToHTML', 'src/configs.js');
+  reactHotLoader.register(entityToHTML, 'entityToHTML', 'src/configs.js');
+  reactHotLoader.register(htmlToStyle, 'htmlToStyle', 'src/configs.js');
+  reactHotLoader.register(htmlToEntity, 'htmlToEntity', 'src/configs.js');
+  reactHotLoader.register(htmlToBlock, 'htmlToBlock', 'src/configs.js');
+  reactHotLoader.register(getToHTMLConfig, 'getToHTMLConfig', 'src/configs.js');
+  reactHotLoader.register(getFromHTMLConfig, 'getFromHTMLConfig', 'src/configs.js');
+  reactHotLoader.register(mergeStyledSpans, 'mergeStyledSpans', 'src/configs.js');
+  reactHotLoader.register(convertCodeBlock, 'convertCodeBlock', 'src/configs.js');
   leaveModule(module);
 })();
 

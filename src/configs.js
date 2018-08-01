@@ -1,4 +1,5 @@
 import React from 'react'
+import ImgWithPreview from './ImgWithPreview';
 
 const namedColors = {
   "aliceblue": "#f0f8ff",
@@ -247,7 +248,7 @@ const convertAtomicBlock = (block, contentState) => {
     } else {
       return (
         <div className="braft-editor-custom-block">
-          <img src={url} width={width} style={{width: '220px', height: 'auto'}}/>
+          <ImgWithPreview src={url} width={width} style={{width: '60%', height: 'auto', border: '1px solid #ccc'}} />
         </div>
       )
     }
@@ -267,7 +268,7 @@ const convertAtomicBlock = (block, contentState) => {
         <div class="braft-editor-search-item-wrap">
           <div class="braft-editor-search-item-cover">
             <div class="ice-img sharp">
-              <img src=${mediaData.coverUrl} />
+              <a href=${mediaData.resourceUrl} target="_blank"><img src=${mediaData.coverUrl} /></a>
             </div>
           </div>
           <a href=${mediaData.resourceUrl} target="_blank" class="braft-editor-search-item-title">${mediaData.title}</a>
@@ -286,19 +287,19 @@ const convertAtomicBlock = (block, contentState) => {
       const spotWidth = width * hotspot.width/100;
       const spotHeight = height * hotspot.height/100;
       return `
-        <a key=${index} href="${hotspot.data.url}" target="_blank" class="braft-editor-hotspot-area-wrap" style="top: ${y}, left: ${x}, width: ${spotWidth}, height: ${spotHeight}"></a>
+        <a key=${index} href="${hotspot.data.url}" target="_blank" class="braft-editor-hotspot-area-wrap" style="top: ${y}px; left: ${x}px; width: ${spotWidth}px; height: ${spotHeight}px;"></a>
       `;
     });
     return `
       <div class="braft-editor-custom-block">
-        <div class="braft-editor-hotspot-image-wrap" style="width: 200, height: ${height}">
-          <div class="braft-editor-hotspot-image-cover" style="width: 200, height: ${height}">
-            <div class="ice-img sharp" style="width: 200, height: ${height}">
-              <img src=${mediaData.url} style="width: 200, height: ${height}" />
+        <div class="braft-editor-hotspot-image-wrap" style="width: 200px; height: ${height}px">
+          <div class="braft-editor-hotspot-image-cover" style="width: 200px; height: ${height}px">
+            <div class="ice-img sharp" style="width: 200px; height: ${height}px">
+              <img src=${mediaData.url} style="width: 200px; height: ${height}px" />
             </div>
           </div>
-          <div class="braft-editor-hotspot-list" style="width: 200, height: ${height}">
-            <div className="braft-ediotr-hotspot-area" style="width: 200, height: ${height}">
+          <div class="braft-editor-hotspot-list" style="width: 200px; height: ${height}px">
+            <div className="braft-ediotr-hotspot-area" style="width: 200px; height: ${height}px">
               ${hotSpaces}
             </div>
           </div>

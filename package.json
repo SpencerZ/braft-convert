@@ -1,6 +1,6 @@
 {
   "name": "braft-convert-zdf",
-  "version": "0.1.2",
+  "version": "0.1.12",
   "description": "A convert helper for Braft Editor.",
   "main": "dist/index.js",
   "scripts": {
